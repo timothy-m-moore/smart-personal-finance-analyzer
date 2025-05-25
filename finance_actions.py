@@ -8,12 +8,12 @@ def load_transactions(filename):
     try:
         with open(filename, newline='') as csvfile:
             reader = csv.DictReader(csvfile)
-            for row in reader:
-                try:
-                    transactions.append(process_row(row))
-                except ValueError as e:
-                    print(f"Error processing row {row}: {e}")
-                    with open('errors.txt', 'a') as error_file:
+            with open('errors.txt', 'a') as error_file:
+                for row in reader:
+                    try:
+                        transactions.append(process_row(row))
+                    except ValueError as e:
+                        print(f"Error processing row {row}: {e}")
                         error_file.write(f"Error parsing row {row}: {e}\n")
 
     # For each row:
