@@ -1,0 +1,13 @@
+Error parsing row {'transaction_id': 'asdbf', 'date': datetime.datetime(2020, 10, 26, 0, 0), 'customer_id': '926', 'amount': 6478.39, 'type': 'credit', 'description': 'Expect series shake art again our.'}: invalid literal for int() with base 10: 'asdbf'
+Error parsing row {'transaction_id': '1', 'date': '2020-1123-26', 'customer_id': '926', 'amount': '6478.39', 'type': 'credit', 'description': 'Expect series shake art again our.'}: time data '2020-1123-26' does not match format '%Y-%m-%d'
+Error parsing row {'transaction_id': '1', 'date': '2020-1123-26', 'customer_id': '926', 'amount': '6478.39', 'type': 'credit', 'description': 'Expect series shake art again our.'}: time data '2020-1123-26' does not match format '%Y-%m-%d'
+Error parsing row {'transaction_id': '1', 'date': '2020-1123-26', 'customer_id': '926', 'amount': '6478.39', 'type': 'credit', 'description': 'Expect series shake art again our.'}: time data '2020-1123-26' does not match format '%Y-%m-%d'
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error: The file nonexistent.csv was not found.
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
+Error: The file nonexistent.csv was not found.
+Error parsing row {'transaction_id': 'invalid_id', 'customer_id': '100', 'date': datetime.datetime(2024, 1, 1, 0, 0), 'amount': 50.0, 'type': 'credit'}: invalid literal for int() with base 10: 'invalid_id'
