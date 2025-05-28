@@ -2,7 +2,7 @@ import unittest
 import tempfile
 import os
 from datetime import datetime
-import finance_actions
+import transaction_operations
 
 class TestLoadTransactions(unittest.TestCase):
     
@@ -17,7 +17,7 @@ class TestLoadTransactions(unittest.TestCase):
             temp_filename = f.name
         
         try:
-            transactions = finance_actions.load_transactions(temp_filename)
+            transactions = transaction_operations.load_transactions(temp_filename)
             
             self.assertEqual(len(transactions), 2)
             self.assertEqual(transactions[0]['transaction_id'], 1)
@@ -28,7 +28,7 @@ class TestLoadTransactions(unittest.TestCase):
             os.unlink(temp_filename)
     
     def test_file_not_found(self):
-        transactions = finance_actions.load_transactions('nonexistent.csv')
+        transactions = transaction_operations.load_transactions('nonexistent.csv')
         self.assertEqual(transactions, [])
     
     def test_invalid_data(self):
@@ -41,7 +41,7 @@ invalid_id,100,2024-01-01,50.00,credit"""
             temp_filename = f.name
         
         try:
-            transactions = finance_actions.load_transactions(temp_filename)
+            transactions = transaction_operations.load_transactions(temp_filename)
             self.assertEqual(len(transactions), 0)  # Invalid row should be skipped
         finally:
             os.unlink(temp_filename)
