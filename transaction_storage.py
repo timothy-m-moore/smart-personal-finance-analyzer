@@ -1,9 +1,10 @@
 import csv
-from datetime import datetime
+import datetime
 
 def load_transactions(filename):
     """Load transactions from a CSV file into a list of dictionaries."""
     transactions = []
+    print('Loading transactions...')
     
     try:
         with open(filename, newline='') as csvfile:
@@ -11,33 +12,31 @@ def load_transactions(filename):
             with open('errors.txt', 'a') as error_file:
                 for row in reader:
                     try:
-                        transactions.append(process_row(row))
+                        transactions.append(_process_row(row))
                     except ValueError as e:
                         print(f"Error processing row {row}: {e}")
                         error_file.write(f"Error parsing row {row}: {e}\n")
-
-    # For each row:
-    #   Parse date with datetime.strptime
-    #   Make amount negative for 'debit'
-    #   Create dictionary with all fields
-    #   Add to transactions
     except FileNotFoundError:
         print(f"Error: The file {filename} was not found.")
         with open('errors.txt', 'a') as error_file:
             error_file.write(f"Error: The file {filename} was not found.\n")
 
+    print(f"Loaded {len(transactions)} transactions from {filename}.")
     return transactions
 
-def process_row(row):
-    """Process a single row of data."""
-    # Convert date to datetime object
-    row['date'] = datetime.strptime(row['date'], '%Y-%m-%d')
-    # Convert amount to float
-    if row['type'] == 'debit':
-        row['amount'] = -float(row['amount'])
-    else:
-        row['amount'] = float(row['amount'])
-    # Convert transaction_id and customer_id to int
-    row['transaction_id'] = int(row['transaction_id'])
-    row['customer_id'] = int(row['customer_id'])
+def _process_row(row):
+    row['date'] = _convert_date(row['date'])
+    row['amount'] = _convert_amount(row['amount'], row['type'])
+    row['transaction_id'] = _convert_to_int(row['transaction_id'])
+    row['customer_id'] = _convert_to_int(row['customer_id'])
     return row
+
+def _convert_date(date_string):
+    return datetime.datetime.strptime(date_string, '%Y-%m-%d')
+
+def _convert_amount(amount_string, transaction_type):
+    amount = float(amount_string)
+    return -amount if transaction_type == 'debit' else amount
+
+def _convert_to_int(value_string):
+    return int(value_string)
