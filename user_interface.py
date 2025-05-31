@@ -2,9 +2,10 @@ def display_menu():
     """Display the main menu of the user interface."""
 
     add_ui_header("Main Menu")
-    print("1. Add transaction")
-    print("2. View transactions")
-    print("3. Exit")
+    print("1. Load transactions")
+    print("2. Add transaction")
+    print("3. View transactions")
+    print("4. Exit")
 
 def add_ui_header(function_name):
     """Display a header for the given function of the UI."""

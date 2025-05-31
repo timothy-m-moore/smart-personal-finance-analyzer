@@ -99,7 +99,7 @@ def view_transactions(transactions):
     print("-" * 70)
 
     # Print each transaction
-    for transaction in transactions[:10]:
+    for transaction in transactions:
         date_str = transaction['date'].strftime('%b %d, %Y')
         amount_str = f"${transaction['amount']:.2f}"
         

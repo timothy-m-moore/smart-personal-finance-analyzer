@@ -1,7 +1,7 @@
 import csv
 import datetime
 
-def load_transactions(filename):
+def load_transactions(filename = 'financial_transactions.csv'):
     """Load transactions from a CSV file into a list of dictionaries."""
     transactions = []
     print('Loading transactions...')
