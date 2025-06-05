@@ -1,0 +1,19 @@
+=== FINANCIAL ANALYSIS - 2022 TRANSACTIONS ===
+
+Financial Summary:
+Total Credits: $50663.16
+Total Debits: $38747.56
+Total Transfers: $47171.03
+Net Balance: $11915.60
+
+By Type:
+  Credit: $50663.16
+  Debit: $38747.56
+
+Percentage by Type:
+  Credit: 37.1%
+  Debit: 28.4%
+  Transfer: 34.5%
+
+Customer with Highest Debit Amount:
+  Customer 917: $8161.55
