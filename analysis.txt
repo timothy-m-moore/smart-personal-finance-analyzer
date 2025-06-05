@@ -9,7 +9,6 @@ Net Balance: $11915.60
 By Type:
   Credit: $50663.16
   Debit: $38747.56
-  Transfer: $47171.03
 
 Percentage by Type:
   Credit: 37.1%
@@ -18,8 +17,3 @@ Percentage by Type:
 
 Customer with Highest Debit Amount:
   Customer 917: $8161.55
-
-Additional Metrics:
-Total Transactions in 2022: 26
-Average Transaction Amount: $5253.14
-Analysis generated on: 2025-06-04 22:31:13

@@ -18,6 +18,13 @@ def add_transaction(transactions):
     transaction_type = _get_transaction_type()
     description = input("Enter description: ")
     transaction_id = max([t['transaction_id'] for t in transactions], default=0) + 1
+
+    # Make debit amounts negative
+    if transaction_type == 'debit':
+        amount = -abs(amount)  # Ensure it's negative
+    else:
+        amount = abs(amount)   # Ensure credits/transfers are positive
+
     transaction = {
         'transaction_id': transaction_id,
         'date': date,
@@ -65,7 +72,7 @@ def _get_amount():
     while True:
         amount = input("Enter amount: ")
         try:
-            return float(amount)
+            return float(abs(amount))
         except ValueError:
             print("Invalid amount. Please enter a number.")
 
@@ -169,8 +176,19 @@ def update_transaction(transactions):
         new_value = _get_date()
     elif property_name == "amount":
         new_value = _get_amount()
+        # Apply the current transaction type's sign convention to the new amount
+        if selected_transaction['type'] == 'debit':
+            new_value = -abs(new_value)  # Make negative for debit
+        else:
+            new_value = abs(new_value)   # Make positive for credit/transfer
     elif property_name == "type":
         new_value = _get_transaction_type()
+        # When type changes, adjust the amount sign accordingly
+        current_amount = abs(selected_transaction['amount'])  # Get absolute value
+        if new_value == 'debit':
+            selected_transaction['amount'] = -current_amount  # Make negative
+        else:
+            selected_transaction['amount'] = current_amount   # Make positive
     elif property_name == "description":
         new_value = input("Enter new description: ")
 
@@ -268,7 +286,9 @@ def analyze_finances(transactions):
     analysis_lines.append("")
     
     analysis_lines.append("By Type:")
-    for transaction_type, total in totals_by_type.items():
+
+    for transaction_type in ['credit', 'debit']:
+        total = totals_by_type[transaction_type]
         if total > 0:
             analysis_lines.append(f"  {transaction_type.capitalize()}: ${total:.2f}")
     
@@ -285,17 +305,6 @@ def analyze_finances(transactions):
         analysis_lines.append(f"  Customer {highest_debit_customer}: ${highest_debit_amount:.2f}")
     else:
         analysis_lines.append("No debit transactions found.")
-    
-    analysis_lines.append("")
-    analysis_lines.append("Additional Metrics:")
-    total_transactions = len(transactions_2022)
-    analysis_lines.append(f"Total Transactions in 2022: {total_transactions}")
-    
-    if total_transactions > 0:
-        avg_transaction = total_amount / total_transactions
-        analysis_lines.append(f"Average Transaction Amount: ${avg_transaction:.2f}")
-    
-    analysis_lines.append(f"Analysis generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
     # Display analysis
     for line in analysis_lines:
@@ -347,8 +356,8 @@ def generate_report(transactions, filename='report.txt'):
             f.write(f"Net Balance: ${net_balance:.2f}\n")
             f.write("By Type:\n")
             
-            # Only write types that have transactions
-            for transaction_type, total in totals_by_type.items():
+            for transaction_type in ['credit', 'debit']:
+                total = totals_by_type[transaction_type]
                 if total > 0:
                     f.write(f"  {transaction_type.capitalize()}: ${total:.2f}\n")
         
