@@ -72,7 +72,7 @@ def _get_amount():
     while True:
         amount = input("Enter amount: ")
         try:
-            return float(abs(amount))
+            return abs(float(amount))
         except ValueError:
             print("Invalid amount. Please enter a number.")
 
@@ -159,44 +159,53 @@ def update_transaction(transactions):
     selected_transaction = _get_transaction_choice(random_transactions)
 
     # Get property to update
+    property_name = _get_property_to_update()
+
+    # Handle the update based on property type
+    if property_name == "type":
+        _update_transaction_type(selected_transaction)
+    else:
+        new_value = _get_new_property_value(property_name, transactions, selected_transaction)
+        selected_transaction[property_name] = new_value
+        print(f"\n{property_name.capitalize()} updated successfully!")
+
+def _get_property_to_update():
+    """Get the property name to update from user."""
     valid_properties = ['customer_id', 'date', 'amount', 'type', 'description']
     print(f"\nValid properties: {', '.join(valid_properties)}")
-
+    
     while True:
         property_name = input("Enter the property name to update: ").strip().lower()
         if property_name in valid_properties:
-            break
+            return property_name
         else:
             print(f"Invalid property. Choose from: {', '.join(valid_properties)}")
 
-    # Get new value and update
+def _get_new_property_value(property_name, transactions, selected_transaction):
+    """Get the new value for a property based on its type."""
     if property_name == "customer_id":
-        new_value = _get_customer_id(transactions)
+        return _get_customer_id(transactions)
     elif property_name == "date":
-        new_value = _get_date()
+        return _get_date()
     elif property_name == "amount":
-        new_value = _get_amount()
-        # Apply the current transaction type's sign convention to the new amount
-        if selected_transaction['type'] == 'debit':
-            new_value = -abs(new_value)  # Make negative for debit
-        else:
-            new_value = abs(new_value)   # Make positive for credit/transfer
-    elif property_name == "type":
-        new_value = _get_transaction_type()
-        # When type changes, adjust the amount sign accordingly
-        current_amount = abs(selected_transaction['amount'])  # Get absolute value
-        if new_value == 'debit':
-            selected_transaction['amount'] = -current_amount  # Make negative
-        else:
-            selected_transaction['amount'] = current_amount   # Make positive
+        amount = _get_amount()
+        return _apply_amount_sign(amount, selected_transaction['type'])
     elif property_name == "description":
-        new_value = input("Enter new description: ")
+        return input("Enter new description: ")
 
-    # Update the transaction
-    selected_transaction[property_name] = new_value
-    print(f"\n{property_name.capitalize()} updated successfully!")
+def _update_transaction_type(selected_transaction):
+    """Update transaction type and adjust amount sign accordingly."""
+    new_type = _get_transaction_type()
+    current_amount = abs(selected_transaction['amount'])
     
-    return
+    selected_transaction['type'] = new_type
+    selected_transaction['amount'] = _apply_amount_sign(current_amount, new_type)
+    
+    print(f"\nType and amount sign updated successfully!")
+
+def _apply_amount_sign(amount, transaction_type):
+    """Apply correct sign to amount based on transaction type."""
+    return -abs(amount) if transaction_type == 'debit' else abs(amount)
 
 def delete_transaction(transactions):
     """Delete a transaction by selecting from random options."""
